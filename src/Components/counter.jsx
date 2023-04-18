@@ -1,7 +1,16 @@
 import React from "react";
 
 const Counter = () => {
-	return <h1>Hello World</h1>
+	const count = 0
+	const formatCount = () => {
+		return count === 0 ? 'empty' : count
+	}
+	return (
+		<>
+			<span>{ formatCount() }</span>
+			<button>+</button>
+		</>
+	)
 }
 
 export default Counter
