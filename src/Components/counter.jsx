@@ -1,14 +1,16 @@
-import React from "react";
+import React from 'react'
 
 const Counter = () => {
 	const count = 0
+
 	const formatCount = () => {
 		return count === 0 ? 'empty' : count
 	}
+
 	return (
 		<>
-			<span>{ formatCount() }</span>
-			<button>+</button>
+			<span className='badge bg-primary m-2'>{formatCount()}</span>
+			<button className='btn bg-primary btn-sm m-2'>+</button>
 		</>
 	)
 }
