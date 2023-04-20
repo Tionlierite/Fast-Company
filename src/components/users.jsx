@@ -4,6 +4,18 @@ import API from '../api'
 const Users = () => {
 	const [users, setUsers] = useState(API.users.fetchAll)
 
+	const getPhraseClasses = () => {
+		let classes = 'badge bg-'
+		classes += users.length === 0 ? 'danger' : 'primary'
+		return classes
+	}
+
+	const formatPhrase = () => {
+		return users.length === 0
+			? `Никто с тобой не тусанет`
+			: `${users.length} человек тусанет с тобой сегодня`
+	}
+
 	const getBadgeClasses = quality => {
 		return 'badge m-2 bg-' + quality.color
 	}
@@ -24,8 +36,8 @@ const Users = () => {
 		return userRating + '/5'
 	}
 
-	const handleDeleteUser = id => {
-		setUsers(prevState => prevState.filter(user => user !== id))
+	const handleDeleteUser = userToDelete => {
+		setUsers(prevState => prevState.filter(user => user !== userToDelete))
 	}
 
 	const getTableRows = () => {
@@ -48,27 +60,43 @@ const Users = () => {
 		))
 	}
 
-	if (users.length === 0) {
-		return
+	const renderPhrase = () => {
+		return (
+			<h2>
+				<span className={getPhraseClasses()}>{formatPhrase()}</span>
+			</h2>
+		)
 	}
 
-	return (
-		<>
-			<table className='table'>
-				<thead>
-					<tr>
-						<th scope='col'>Имя</th>
-						<th scope='col'>Качества</th>
-						<th scope='col'>Профессия</th>
-						<th scope='col'>Встретился, раз</th>
-						<th scope='col'>Оценка</th>
-						<th scope='col'></th>
-					</tr>
-				</thead>
-				<tbody>{getTableRows()}</tbody>
-			</table>
-		</>
-	)
+	const renderTableOfUsers = () => {
+		return (
+			<>
+				<table className='table'>
+					<thead>
+						<tr>
+							<th scope='col'>Имя</th>
+							<th scope='col'>Качества</th>
+							<th scope='col'>Профессия</th>
+							<th scope='col'>Встретился, раз</th>
+							<th scope='col'>Оценка</th>
+							<th scope='col'></th>
+						</tr>
+					</thead>
+					<tbody>{getTableRows()}</tbody>
+				</table>
+			</>
+		)
+	}
+
+	if (users.length !== 0) {
+		return (
+			<>
+				{renderPhrase()}
+				{renderTableOfUsers()}
+			</>
+		)
+	}
+	return <>{renderPhrase()}</>
 }
 
 export default Users
