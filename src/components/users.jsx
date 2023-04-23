@@ -10,10 +10,18 @@ const Users = () => {
 		return classes
 	}
 
-	const formatPhrase = () => {
-		return users.length === 0
-			? `Никто с тобой не тусанет`
-			: `${users.length} человек тусанет с тобой сегодня`
+	const formatPhrase = numberOfPeopleInObject => {
+		let phrase = ''
+		const lastNumber = Number(numberOfPeopleInObject.toString().slice(-1))
+
+		if (lastNumber === 1) phrase = 'человек тусанет'
+		if ([2, 3, 4].indexOf(lastNumber) >= 0) phrase = 'человека тусанет'
+		if (numberOfPeopleInObject >= 5 && numberOfPeopleInObject <= 14)
+			phrase = 'человек тусанет'
+
+		if (phrase)
+			return numberOfPeopleInObject + ' ' + phrase + ' с тобой сегодня'
+		return 'Никто с тобой не тусанет'
 	}
 
 	const getBadgeClasses = quality => {
@@ -36,8 +44,8 @@ const Users = () => {
 		return userRating + '/5'
 	}
 
-	const handleDeleteUser = userToDelete => {
-		setUsers(prevState => prevState.filter(user => user !== userToDelete))
+	const handleDeleteUser = userIDToDelete => {
+		setUsers(prevState => prevState.filter(user => user._id !== userIDToDelete))
 	}
 
 	const getTableRows = () => {
@@ -51,7 +59,7 @@ const Users = () => {
 				<td>
 					<button
 						className='btn bg-danger btn-sm m-2 text-light'
-						onClick={() => handleDeleteUser(user)}
+						onClick={() => handleDeleteUser(user._id)}
 					>
 						Удалить
 					</button>
@@ -63,7 +71,7 @@ const Users = () => {
 	const renderPhrase = () => {
 		return (
 			<h2>
-				<span className={getPhraseClasses()}>{formatPhrase()}</span>
+				<span className={getPhraseClasses()}>{formatPhrase(users.length)}</span>
 			</h2>
 		)
 	}
