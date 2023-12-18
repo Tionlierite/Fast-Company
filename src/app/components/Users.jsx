@@ -1,34 +1,10 @@
-import React, { useState } from "react"
-import api from "../api"
+import React from "react"
 // Components
-import { SearchStatus } from "./SearchStatus.jsx"
 import { User } from "./User.jsx"
 
-const Users = () => {
-	const [users, setUsers] = useState(api.users.fetchAll())
-
-	const handleDelete = userId => {
-		setUsers(users.filter(user => user._id !== userId))
-	}
-
-	const handleFavorite = userId => {
-		setUsers(
-			users.map(user => {
-				if (user._id === userId) {
-					return {
-						...user,
-						bookmark: !user.bookmark
-					}
-				}
-				return user
-			})
-		)
-	}
-
+const Users = ({ users, ...rest }) => {
 	return (
 		<>
-			<SearchStatus users={users} />
-
 			{users.length > 0 && (
 				<table className='table'>
 					<thead>
@@ -44,7 +20,7 @@ const Users = () => {
 					</thead>
 					<tbody>
 						{users.map(user => (
-							<User key={user._id} {...user} handleDelete={handleDelete} handleFavorite={handleFavorite} />
+							<User key={user._id} {...user} {...rest} />
 						))}
 					</tbody>
 				</table>

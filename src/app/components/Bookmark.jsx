@@ -1,21 +1,9 @@
 import React from "react"
 
-export const Bookmark = ({ userId, bookmark, handleFavorite }) => {
-	return bookmark ? (
-		<button
-			onClick={() => {
-				handleFavorite(userId)
-			}}
-		>
-			<i className='bi bi-bookmark-check'></i>
-		</button>
-	) : (
-		<button
-			onClick={() => {
-				handleFavorite(userId)
-			}}
-		>
-			<i className='bi bi-bookmark'></i>
+export const Bookmark = ({ status, ...rest }) => {
+	return (
+		<button {...rest}>
+			<i className={`bi bi-bookmark${status ? "-check" : ""}`}></i>
 		</button>
 	)
 }
