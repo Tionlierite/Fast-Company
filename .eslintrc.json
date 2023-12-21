@@ -16,10 +16,6 @@
         "react"
     ],
     "rules": {
-        "linebreak-style": [
-            "error",
-            "unix"
-        ],
         "react/prop-types": "off",
         "quotes": [
             "error",
