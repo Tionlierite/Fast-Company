@@ -1,26 +1,35 @@
 import React from "react"
-import { User } from "./User.jsx"
-import { TableHeader } from "./TableHeader.jsx"
+import { Bookmark } from "./Bookmark.jsx"
+import { QualitiesList } from "./QualitiesList.jsx"
+import { Table } from "./Table.jsx"
 
-export const UsersTable = ({ users, onSort, selectedSort, ...rest }) => {
+export const UsersTable = ({ users, onSort, selectedSort, onToggleBookmark, onDelete }) => {
 	const columns = {
-		name: { iter: "name", name: "Имя" },
-		qualities: { name: "Качество" },
-		professions: { iter: "profession.name", name: "Профессия" },
-		completedMeetings: { iter: "completedMeetings", name: "Встретился, раз" },
-		rate: { iter: "rate", name: "Оценка" },
-		bookmark: { iter: "bookmark", name: "Избранное" },
-		delete: {}
+		name: { path: "name", name: "Имя" },
+		qualities: { name: "Качество", component: user => <QualitiesList qualities={user.qualities} /> },
+		professions: { path: "profession.name", name: "Профессия" },
+		completedMeetings: { path: "completedMeetings", name: "Встретился, раз" },
+		rate: { path: "rate", name: "Оценка" },
+		bookmark: {
+			path: "bookmark",
+			name: "Избранное",
+			component: user => (
+				<Bookmark
+					status={user.bookmark}
+					onClick={() => {
+						onToggleBookmark(user._id)
+					}}
+				/>
+			)
+		},
+		delete: {
+			component: user => (
+				<button onClick={() => onDelete(user._id)} className='btn btn-danger'>
+					delete
+				</button>
+			)
+		}
 	}
 
-	return (
-		<table className='table'>
-			<TableHeader {...{ onSort, selectedSort, columns }} />
-			<tbody>
-				{users.map(user => (
-					<User key={user._id} {...user} {...rest} />
-				))}
-			</tbody>
-		</table>
-	)
+	return <Table onSort={onSort} selectedSort={selectedSort} columns={columns} data={users} />
 }
