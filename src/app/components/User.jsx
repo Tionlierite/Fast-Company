@@ -1,5 +1,5 @@
 import React from "react"
-import { Qualitie } from "./Qualitie.jsx"
+import { Quality } from "./Quality.jsx"
 import { Bookmark } from "./Bookmark.jsx"
 
 export const User = ({
@@ -17,26 +17,15 @@ export const User = ({
 		<tr>
 			<td>{name}</td>
 			<td>
-				{qualities.map(qualitie => (
-					<Qualitie key={qualitie._id} {...qualitie} />
+				{qualities.map(quality => (
+					<Quality key={quality._id} {...quality} />
 				))}
 			</td>
 			<td>{profession.name}</td>
 			<td>{completedMeetings}</td>
 			<td>{rate} /5</td>
-			<td>
-				<Bookmark
-					status={bookmark}
-					onClick={() => {
-						handleFavorite(_id)
-					}}
-				/>
-			</td>
-			<td>
-				<button onClick={() => handleDelete(_id)} className='btn btn-danger'>
-					delete
-				</button>
-			</td>
+			<td></td>
+			<td></td>
 		</tr>
 	)
 }
