@@ -9,6 +9,12 @@ export const TableHeader = ({ onSort, selectedSort, columns }) => {
 		}
 	}
 
+	const showOrderIcon = item => {
+		if (selectedSort.path === item) {
+			return selectedSort.order === "asc" ? "up" : "down"
+		}
+	}
+
 	return (
 		<thead>
 			<tr>
@@ -22,6 +28,7 @@ export const TableHeader = ({ onSort, selectedSort, columns }) => {
 						scope='col'
 					>
 						{columns[column].name}
+						<i className={`bi bi-caret-${showOrderIcon(columns[column].path)}-fill`}></i>
 					</th>
 				))}
 			</tr>
