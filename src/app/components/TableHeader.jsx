@@ -9,10 +9,11 @@ export const TableHeader = ({ onSort, selectedSort, columns }) => {
 		}
 	}
 
-	const showOrderIcon = item => {
-		if (selectedSort.path === item) {
-			return selectedSort.order === "asc" ? "up" : "down"
+	const renderSortArrow = (selectedSort, currentPath) => {
+		if (selectedSort.path === currentPath) {
+			return selectedSort.order === "asc" ? "down" : "up"
 		}
+		return null
 	}
 
 	return (
@@ -28,7 +29,7 @@ export const TableHeader = ({ onSort, selectedSort, columns }) => {
 						scope='col'
 					>
 						{columns[column].name}
-						<i className={`bi bi-caret-${showOrderIcon(columns[column].path)}-fill`}></i>
+						<i className={`bi bi-caret-${renderSortArrow(selectedSort, columns[column].path)}-fill`}></i>
 					</th>
 				))}
 			</tr>
