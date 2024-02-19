@@ -9,7 +9,7 @@ import { paginate } from "../utils/paginate.js"
 import api from "../api/index.js"
 import _ from "lodash"
 
-const Users = () => {
+const UsersList = () => {
 	const [currentPage, setCurrentPage] = useState(1)
 	const [professions, setProfessions] = useState()
 	const [selectedProfession, setSelectedProfession] = useState()
@@ -98,7 +98,7 @@ const Users = () => {
 			</div>
 		)
 	}
-	return "loading"
+	return <h6>Loading...</h6>
 }
 
-export default Users
+export default UsersList
