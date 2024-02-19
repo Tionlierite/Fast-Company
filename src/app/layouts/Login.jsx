@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useState } from "react"
 
 export const Login = () => {
@@ -20,10 +19,4 @@ export const Login = () => {
 			</div>
 		</form>
 	)
-=======
-import React from "react"
-
-export const Login = () => {
-	return <h1>Login</h1>
->>>>>>> 3df53f6059206546ba54e060a92d6113554ef670
 }
