@@ -17,14 +17,24 @@ export const UserPage = ({ userId }) => {
 
 	if (user) {
 		return (
+<<<<<<< HEAD
 			<div>
 				<h1>{user.name}</h1>
 				<h2>Профессия: {user.profession.name}</h2>
+=======
+			<>
+				<h1>{user.name}</h1>
+				<h2>{user.profession.name}</h2>
+>>>>>>> 3df53f6059206546ba54e060a92d6113554ef670
 				<QualitiesList qualities={user.qualities} />
 				<p>completedMeetings: {user.completedMeetings}</p>
 				<h2>Rate: {user.rate}</h2>
 				<button onClick={handleClick}>Все Пользователи</button>
+<<<<<<< HEAD
 			</div>
+=======
+			</>
+>>>>>>> 3df53f6059206546ba54e060a92d6113554ef670
 		)
 	}
 	return <h6>Loading...</h6>
