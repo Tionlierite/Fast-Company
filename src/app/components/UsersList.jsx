@@ -15,6 +15,7 @@ const UsersList = () => {
 	const [selectedProfession, setSelectedProfession] = useState()
 	const [sortBy, setSortBy] = useState({ path: "name", order: "asc" })
 	const [users, setUsers] = useState()
+	const [searchQuery, setSearchQuery] = useState("")
 	const pageSize = 8
 
 	const handleDelete = userId => {
@@ -41,11 +42,17 @@ const UsersList = () => {
 
 	const handleProfessionSelect = item => {
 		setSelectedProfession(item)
+		if (searchQuery !== "") setSearchQuery("")
 		setCurrentPage(1)
 	}
 
 	const handleSort = item => {
 		setSortBy(item)
+	}
+
+	const handleSearchQuery = ({ target }) => {
+		setSearchQuery(target.value)
+		setSelectedProfession(undefined)
 	}
 
 	const clearFilter = () => {
@@ -58,9 +65,12 @@ const UsersList = () => {
 	}, [])
 
 	if (users) {
-		const filteredUsers = selectedProfession
+		let filteredUsers = searchQuery
+			? users.filter(user => user.name.toLowerCase().indexOf(searchQuery.toLowerCase()) !== -1) // .includes
+			: selectedProfession
 			? users.filter(user => JSON.stringify(user.profession) === JSON.stringify(selectedProfession))
 			: users
+
 		const usersCount = filteredUsers.length
 		const sortedUsers = _.orderBy(filteredUsers, [sortBy.path], [sortBy.order])
 		const userCrop = paginate(sortedUsers, currentPage, pageSize)
@@ -77,6 +87,13 @@ const UsersList = () => {
 				)}
 				<div className='d-flex flex-column'>
 					<SearchStatus length={usersCount} />
+					<input
+						type='text'
+						name='searchQuery'
+						placeholder='Search...'
+						value={searchQuery}
+						onChange={handleSearchQuery}
+					/>
 					{usersCount > 0 && (
 						<UsersTable
 							users={userCrop}
