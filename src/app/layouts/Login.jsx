@@ -5,6 +5,7 @@ import { validator } from "../utils/validator.js"
 export const Login = () => {
 	const [data, setData] = useState({ email: "", password: "" })
 	const [errors, setErrors] = useState({})
+	const isValid = Object.keys(errors).length === 0
 	const validatorConfig = {
 		email: {
 			isRequired: { message: "Электронная почта обязательна для заполнения" },
@@ -39,23 +40,32 @@ export const Login = () => {
 	}, [data])
 
 	return (
-		<form onSubmit={handleSubmit}>
-			<TextField
-				label='Электронная почта'
-				name='email'
-				value={data.email}
-				onChange={handleChange}
-				error={errors.email}
-			/>
-			<TextField
-				label='Пароль'
-				type='password'
-				name='password'
-				value={data.password}
-				onChange={handleChange}
-				error={errors.password}
-			/>
-			<button type='submit'>submit</button>
-		</form>
+		<div className='container mt-5'>
+			<div className='row'>
+				<div className='col-md-6 offeset-md-3 shadow p-4'>
+					<h3 className='mb-4'>Login</h3>
+					<form onSubmit={handleSubmit}>
+						<TextField
+							label='Электронная почта'
+							name='email'
+							value={data.email}
+							onChange={handleChange}
+							error={errors.email}
+						/>
+						<TextField
+							label='Пароль'
+							type='password'
+							name='password'
+							value={data.password}
+							onChange={handleChange}
+							error={errors.password}
+						/>
+						<button type='submit' disabled={!isValid} className='btn btn-primary w-100 mx-auto'>
+							submit
+						</button>
+					</form>
+				</div>
+			</div>
+		</div>
 	)
 }
