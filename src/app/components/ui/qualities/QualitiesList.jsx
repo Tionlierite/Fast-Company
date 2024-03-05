@@ -1,7 +1,7 @@
 import React from "react"
 import { Quality } from "./Quality.jsx"
 
-export const QualitiesList = ({ qualities }) => {
+const QualitiesList = ({ qualities }) => {
 	return (
 		<>
 			{qualities.map(quality => (
@@ -10,3 +10,5 @@ export const QualitiesList = ({ qualities }) => {
 		</>
 	)
 }
+
+export default QualitiesList

@@ -1,6 +1,6 @@
 import React from "react"
 
-export const TableHeader = ({ onSort, selectedSort, columns }) => {
+const TableHeader = ({ onSort, selectedSort, columns }) => {
 	const handleSort = item => {
 		if (selectedSort.path === item) {
 			onSort({ ...selectedSort, order: selectedSort.order === "asc" ? "desc" : "asc" })
@@ -36,3 +36,5 @@ export const TableHeader = ({ onSort, selectedSort, columns }) => {
 		</thead>
 	)
 }
+
+export default TableHeader

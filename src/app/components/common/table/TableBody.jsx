@@ -1,7 +1,7 @@
 import React from "react"
 import _ from "lodash"
 
-export const TableBody = ({ data, columns }) => {
+const TableBody = ({ data, columns }) => {
 	const renderContent = (item, column) => {
 		if (columns[column].component) {
 			const component = columns[column].component
@@ -24,3 +24,5 @@ export const TableBody = ({ data, columns }) => {
 		</tbody>
 	)
 }
+
+export default TableBody

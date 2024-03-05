@@ -1,13 +1,13 @@
 import React from "react"
-import { Bookmark } from "./Bookmark.jsx"
-import { QualitiesList } from "./QualitiesList.jsx"
-import { Table } from "./Table.jsx"
+import { Bookmark } from "../common/Bookmark.jsx"
+import Qualities from "./qualities/index.js"
 import { Link } from "react-router-dom"
+import { Table } from "../common/table/index.js"
 
 export const UsersTable = ({ users, onSort, selectedSort, onToggleBookmark, onDelete }) => {
 	const columns = {
 		name: { path: "name", name: "Имя", component: user => <Link to={`/users/${user._id}`}>{user.name}</Link> },
-		qualities: { name: "Качество", component: user => <QualitiesList qualities={user.qualities} /> },
+		qualities: { name: "Качество", component: user => <Qualities qualities={user.qualities} /> },
 		professions: { path: "profession.name", name: "Профессия" },
 		completedMeetings: { path: "completedMeetings", name: "Встретился, раз" },
 		rate: { path: "rate", name: "Оценка" },

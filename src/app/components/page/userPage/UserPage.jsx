@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react"
-import api from "../api/index.js"
-import { QualitiesList } from "./QualitiesList.jsx"
+import api from "../../../api/index.js"
+import Qualities from "../../ui/qualities"
 import { useHistory } from "react-router-dom"
 
-export const UserPage = ({ userId }) => {
+const UserPage = ({ userId }) => {
 	const [user, setUser] = useState()
 	const history = useHistory()
 
@@ -20,7 +20,7 @@ export const UserPage = ({ userId }) => {
 			<div>
 				<h1>{user.name}</h1>
 				<h2>Профессия: {user.profession.name}</h2>
-				<QualitiesList qualities={user.qualities} />
+				<Qualities qualities={user.qualities} />
 				<p>completedMeetings: {user.completedMeetings}</p>
 				<h2>Rate: {user.rate}</h2>
 				<button onClick={handleClick}>Все Пользователи</button>
@@ -29,3 +29,5 @@ export const UserPage = ({ userId }) => {
 	}
 	return <h6>Loading...</h6>
 }
+
+export default UserPage
