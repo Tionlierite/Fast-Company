@@ -1,10 +1,21 @@
 import React, { useEffect, useState } from "react"
 import { validator } from "../../utils/validator.js"
 import { TextField } from "../common/form/TextField.jsx"
+import api from "../../api/index.js"
+import SelectField from "../common/form/SelectField.jsx"
+import RadioField from "../common/form/RadioField.jsx"
+import MultiSelectField from "../common/form/MultiSelectField.jsx"
 
-export const LoginForm = () => {
-	const [data, setData] = useState({ email: "", password: "" })
+export const RegisterForm = () => {
+	const [data, setData] = useState({ email: "", password: "", profession: "", sex: "male", qualities: [] })
+	const [qualitites, setQualities] = useState()
+	const [professions, setProfessions] = useState()
 	const [errors, setErrors] = useState({})
+	useEffect(() => {
+		api.professions.fetchAll().then(data => setProfessions(data))
+		api.qualities.fetchAll().then(data => setQualities(data))
+	}, [])
+
 	const isValid = Object.keys(errors).length === 0
 	const validatorConfig = {
 		email: {
@@ -16,6 +27,11 @@ export const LoginForm = () => {
 			isCapitalSymbol: { message: "Пароль должен содержать хотя бы одну заглавную букву" },
 			isContainDigit: { message: "Пароль должен содержать хотя бы одну цифру" },
 			min: { message: "Пароль должен состоять минимум из 8 символов", value: 8 }
+		},
+		profession: {
+			isRequired: {
+				message: "Обязательно выберите вашу профессию"
+			}
 		}
 	}
 
@@ -56,6 +72,25 @@ export const LoginForm = () => {
 				onChange={handleChange}
 				error={errors.password}
 			/>
+			<SelectField
+				defaultOption='Выбрать...'
+				options={professions}
+				onChange={handleChange}
+				value={data.profession}
+				error={errors.profession}
+				label='Выберите вашу профессию'
+			/>
+			<RadioField
+				options={[
+					{ name: "Male", value: "male" },
+					{ name: "Female", value: "female" },
+					{ name: "Other", value: "other" }
+				]}
+				value={data.sex}
+				name='sex'
+				onChange={handleChange}
+			/>
+			<MultiSelectField options={qualitites} onChange={handleChange} />
 			<button type='submit' disabled={!isValid} className='btn btn-primary w-100 mx-auto'>
 				submit
 			</button>
