@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react"
 import { validator } from "../../utils/validator.js"
 import { TextField } from "../common/form/TextField.jsx"
 import CheckboxField from "../common/form/CheckboxField.jsx"
-import { object, string } from "yup"
 
 export const LoginForm = () => {
 	const [data, setData] = useState({ email: "", password: "", stayOn: false })
@@ -21,18 +20,6 @@ export const LoginForm = () => {
 		}
 	}
 
-	const validateScheme = object({
-		password: string()
-			.required("Пароль обязателен для заполнения")
-			.matches(/(?=.*[A-Z])/, "Пароль должен содержать хотя бы одну заглавную букву")
-			.matches(/(?=.*[0-9])/, "Пароль должен содержать хотя бы одну цифру")
-			.matches(/(?=.*[!@#$%^&*])/, "Пароль должен содержать один из специальных символов !@#$%^&*")
-			.matches(/(?=.{8,})/, "Пароль должен состоять минимум из 8 символов"),
-		email: string()
-			.required("Электронная почта обязательна для заполнения")
-			.email("Электронная почта введена некорректно")
-	})
-
 	const handleChange = target => {
 		setData(prevState => ({ ...prevState, [target.name]: target.value }))
 	}
@@ -44,12 +31,8 @@ export const LoginForm = () => {
 		console.log(data)
 	}
 	const validate = () => {
-		// const errors = validator(data, validatorConfig)
-		validateScheme
-			.validate(data)
-			.then(() => setErrors({}))
-			.catch(err => setErrors({ [err.path]: err.message }))
-		// setErrors(errors)
+		const errors = validator(data, validatorConfig)
+		setErrors(errors)
 		return Object.keys(errors).length === 0
 	}
 

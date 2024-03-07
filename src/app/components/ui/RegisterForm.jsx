@@ -90,6 +90,7 @@ export const RegisterForm = () => {
 				options={professions}
 				onChange={handleChange}
 				value={data.profession}
+				name='professions'
 				error={errors.profession}
 				label='Выберите вашу профессию'
 			/>
@@ -104,7 +105,13 @@ export const RegisterForm = () => {
 				onChange={handleChange}
 				label='Выберите ваш пол'
 			/>
-			<MultiSelectField options={qualities} onChange={handleChange} name='qualities' label='Выберите ваши качества' />
+			<MultiSelectField
+				options={qualities}
+				onChange={handleChange}
+				defaultValue={data.qualities}
+				name='qualities'
+				label='Выберите ваши качества'
+			/>
 			<CheckboxField value={data.license} onChange={handleChange} name='license' error={errors.license}>
 				Подтвердить <a>лицензионное соглашение</a>
 			</CheckboxField>

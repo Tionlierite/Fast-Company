@@ -1,12 +1,12 @@
 import React from "react"
 
-const SelectField = ({ label, value, onChange, defaultOption, options, error }) => {
+const SelectField = ({ label, value, onChange, defaultOption, options, error, name }) => {
 	const getInputClasses = () => {
 		return "form-select" + (error ? " is-invalid" : "")
 	}
 
 	const handleChange = ({ target }) => {
-		onChange({ name:target.name, value:target.value })
+		onChange({ name: target.name, value: target.value })
 	}
 
 	const optionsArray =
@@ -16,10 +16,10 @@ const SelectField = ({ label, value, onChange, defaultOption, options, error }) 
 
 	return (
 		<div className='mb-4'>
-			<label htmlFor='validationCustom04' className='form-label'>
+			<label htmlFor={name} className='form-label'>
 				{label}
 			</label>
-			<select className={getInputClasses()} id='validationCustom04' value={value} onChange={handleChange} name='profession'>
+			<select className={getInputClasses()} id={name} value={value} onChange={handleChange} name={name}>
 				<option disabled value=''>
 					{defaultOption}
 				</option>
