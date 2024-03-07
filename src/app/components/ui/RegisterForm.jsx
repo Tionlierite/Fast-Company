@@ -5,10 +5,18 @@ import api from "../../api/index.js"
 import SelectField from "../common/form/SelectField.jsx"
 import RadioField from "../common/form/RadioField.jsx"
 import MultiSelectField from "../common/form/MultiSelectField.jsx"
+import CheckboxField from "../common/form/CheckboxField.jsx"
 
 export const RegisterForm = () => {
-	const [data, setData] = useState({ email: "", password: "", profession: "", sex: "male", qualities: [] })
-	const [qualitites, setQualities] = useState()
+	const [data, setData] = useState({
+		email: "",
+		password: "",
+		profession: "",
+		sex: "male",
+		qualities: [],
+		license: false
+	})
+	const [qualities, setQualities] = useState()
 	const [professions, setProfessions] = useState()
 	const [errors, setErrors] = useState({})
 	useEffect(() => {
@@ -32,10 +40,15 @@ export const RegisterForm = () => {
 			isRequired: {
 				message: "Обязательно выберите вашу профессию"
 			}
+		},
+		license: {
+			isRequired: {
+				message: "Вы не можете использовать наш сервис без подтверждения лицензионного соглашения"
+			}
 		}
 	}
 
-	const handleChange = ({ target }) => {
+	const handleChange = target => {
 		setData(prevState => ({ ...prevState, [target.name]: target.value }))
 	}
 
@@ -89,9 +102,13 @@ export const RegisterForm = () => {
 				value={data.sex}
 				name='sex'
 				onChange={handleChange}
+				label='Выберите ваш пол'
 			/>
-			<MultiSelectField options={qualitites} onChange={handleChange} />
-			<button type='submit' disabled={!isValid} className='btn btn-primary w-100 mx-auto'>
+			<MultiSelectField options={qualities} onChange={handleChange} name='qualities' label='Выберите ваши качества' />
+			<CheckboxField value={data.license} onChange={handleChange} name='license' error={errors.license}>
+				Подтвердить <a>лицензионное соглашение</a>
+			</CheckboxField>
+			<button type='submit' disabled={!isValid} className='btn btn-primary w-100 mx-auto mb-2'>
 				submit
 			</button>
 		</form>

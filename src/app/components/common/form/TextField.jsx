@@ -8,6 +8,9 @@ export const TextField = ({ label, type = "text", name, value, error, onChange }
 	const toggleShowPassword = () => {
 		setShowPassword(prevState => !prevState)
 	}
+	const handleChange = ({ target }) => {
+		onChange({ name: target.name, value: target.value })
+	}
 	return (
 		<div className='mb-4'>
 			<label htmlFor={name}>{label}</label>
@@ -16,7 +19,7 @@ export const TextField = ({ label, type = "text", name, value, error, onChange }
 					type={showPassword ? "text" : type}
 					id={name}
 					value={value}
-					onChange={onChange}
+					onChange={handleChange}
 					name={name}
 					className={getInputClasses()}
 				/>
