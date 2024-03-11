@@ -1,28 +1,55 @@
 import React, { useEffect, useState } from "react"
-import { validator } from "../../utils/validator.js"
-import { TextField } from "../common/form/TextField.jsx"
-import CheckboxField from "../common/form/CheckboxField.jsx"
+import { validator } from "../../utils/validator"
+import { TextField } from "../common/form/textField"
+import CheckBoxField from "../common/form/checkBoxField"
 
-export const LoginForm = () => {
-	const [data, setData] = useState({ email: "", password: "", stayOn: false })
+const LoginForm = () => {
+	const [data, setData] = useState({
+		email: "",
+		password: "",
+		stayOn: false
+	})
 	const [errors, setErrors] = useState({})
-	const isValid = Object.keys(errors).length === 0
+	const handleChange = target => {
+		setData(prevState => ({
+			...prevState,
+			[target.name]: target.value
+		}))
+	}
 	const validatorConfig = {
 		email: {
-			isRequired: { message: "Электронная почта обязательна для заполнения" },
-			isEmail: { message: "Электронная почта введена некорректно" }
+			isRequired: {
+				message: "Электронная почта обязательна для заполнения"
+			},
+			isEmail: {
+				message: "Email введен некорректно"
+			}
 		},
 		password: {
-			isRequired: { message: "Пароль обязателен для заполнения" },
-			isCapitalSymbol: { message: "Пароль должен содержать хотя бы одну заглавную букву" },
-			isContainDigit: { message: "Пароль должен содержать хотя бы одну цифру" },
-			min: { message: "Пароль должен состоять минимум из 8 символов", value: 8 }
+			isRequired: {
+				message: "Пароль обязателен для заполнения"
+			},
+			isCapitalSymbol: {
+				message: "Пароль должен содержать хотя бы одну заглавную букву"
+			},
+			isContainDigit: {
+				message: "Пароль должен содержать хотя бы одно число"
+			},
+			min: {
+				message: "Пароль должен состоять минимум из 8 символов",
+				value: 8
+			}
 		}
 	}
-
-	const handleChange = target => {
-		setData(prevState => ({ ...prevState, [target.name]: target.value }))
+	useEffect(() => {
+		validate()
+	}, [data])
+	const validate = () => {
+		const errors = validator(data, validatorConfig)
+		setErrors(errors)
+		return Object.keys(errors).length === 0
 	}
+	const isValid = Object.keys(errors).length === 0
 
 	const handleSubmit = e => {
 		e.preventDefault()
@@ -30,16 +57,6 @@ export const LoginForm = () => {
 		if (!isValid) return
 		console.log(data)
 	}
-	const validate = () => {
-		const errors = validator(data, validatorConfig)
-		setErrors(errors)
-		return Object.keys(errors).length === 0
-	}
-
-	useEffect(() => {
-		validate()
-	}, [data])
-
 	return (
 		<form onSubmit={handleSubmit}>
 			<TextField
@@ -57,12 +74,14 @@ export const LoginForm = () => {
 				onChange={handleChange}
 				error={errors.password}
 			/>
-			<CheckboxField value={data.stayOn} onChange={handleChange} name='stayOn'>
+			<CheckBoxField value={data.stayOn} onChange={handleChange} name='stayOn'>
 				Оставаться в системе
-			</CheckboxField>
-			<button type='submit' disabled={!isValid} className='btn btn-primary w-100 mx-auto mb-2'>
-				submit
+			</CheckBoxField>
+			<button className='btn btn-primary w-100 mx-auto' type='submit' disabled={!isValid}>
+				Submit
 			</button>
 		</form>
 	)
 }
+
+export default LoginForm

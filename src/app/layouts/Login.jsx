@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { LoginForm } from "../components/ui/LoginForm.jsx"
+import LoginForm from "../components/ui/LoginForm.jsx"
 import { useParams } from "react-router-dom"
 import { RegisterForm } from "../components/ui/RegisterForm.jsx"
 
